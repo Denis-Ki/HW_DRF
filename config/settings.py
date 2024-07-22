@@ -26,6 +26,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "users",
+    "cours",
+    "phonenumbers",
 ]
 
 MIDDLEWARE = [
@@ -63,13 +66,13 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'), # Пользователь для подключения
-        'PASSWORD': os.getenv('PASSWORD'), # Пароль для этого пользователя
-        'HOST': os.getenv('HOST'), # Адрес, на котором развернут сервер БД
-        'PORT': os.getenv('PORT'), # Порт, на котором работает сервер БД
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.getenv("NAME"),
+        "USER": os.getenv("USER"),  # Пользователь для подключения
+        "PASSWORD": os.getenv("PASSWORD"),  # Пароль для этого пользователя
+        "HOST": os.getenv("HOST"),  # Адрес, на котором развернут сервер БД
+        "PORT": os.getenv("PORT"),  # Порт, на котором работает сервер БД
     }
 }
 
@@ -113,8 +116,10 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.User"
