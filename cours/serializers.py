@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
-from cours.models import Lesson, Course
+from cours.models import Lesson, Course, Subscription
+from cours.validators import LinkToVideoValidator
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -14,6 +15,7 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
+        validators = [LinkToVideoValidator(fields='link_to_video')]
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -26,3 +28,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     def get_lesson_count(self, obj):
         return Lesson.objects.filter(course=obj).count()
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = ['id', 'sab_course', 'sab_user', 'sab_activ']
