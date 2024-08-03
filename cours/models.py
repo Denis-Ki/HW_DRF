@@ -1,5 +1,4 @@
 from django.db import models
-import os
 
 
 NULLABLE = {"blank": True, "null": True}
@@ -41,3 +40,15 @@ class Lesson(models.Model):
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
 
+
+class Subscription(models.Model):
+    sab_course = models.ForeignKey(Course, on_delete=models.CASCADE, **NULLABLE, verbose_name='подписка на курс')
+    sab_user = models.ForeignKey('users.User', on_delete=models.CASCADE, **NULLABLE, verbose_name='кто подписан на курс')
+    sab_activ = models.BooleanField(default=True, verbose_name='подписан не подписан')
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+
+    def __str__(self):
+        return f'{self.sab_user.email} подписан на {self.sab_course.title}'
