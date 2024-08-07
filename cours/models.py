@@ -8,6 +8,7 @@ class Course(models.Model):
     title = models.CharField(max_length=150, verbose_name="название")
     preview = models.ImageField(upload_to="blog", verbose_name="изображение", **NULLABLE)
     description = models.TextField(verbose_name="описание", **NULLABLE)
+    updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(
         'users.User', on_delete=models.CASCADE, related_name="course_owner", **NULLABLE
     )
