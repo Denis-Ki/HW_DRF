@@ -12,6 +12,7 @@ from cours.serializers import CourseSerializer, CourseDetailSerializer, Subscrip
 from cours.models import Lesson
 from cours.serializers import LessonSerializer
 from users.permissions import NotModer, IsModer, IsOwner
+from cours.tasks import notify_subscribers
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -37,6 +38,10 @@ class CourseViewSet(viewsets.ModelViewSet):
         elif self.action in ["destroy"]:
             self.permission_classes = (NotModer, IsOwner,)
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+        notify_subscribers.delay(course.id)
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
